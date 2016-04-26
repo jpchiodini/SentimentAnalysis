@@ -8,6 +8,7 @@ import operator
 from nltk.corpus import stopwords
 import string
 import json as json
+from datetime import datetime
 
 def readJson(filename):
     """
@@ -30,6 +31,7 @@ def readJson(filename):
         if row['keywords'] == "":
             df.set_value(index,'keywords', giveKeyword(row['body']))                       
 
+    #sort the columns by date
     df = df.sort(columns = 'date')
     df['body'] = df['body'].apply(cleanText) ##clean the data a final time
     
@@ -37,14 +39,11 @@ def readJson(filename):
     df = df.ix[:, ['date', 'keywords', 'body']]    
     return df
 
-
-
 def cleanText(text):
     """
     removes punctuation, stopwords and returns lowercase text in a list of single words
     """
-    text = text.lower()  
-    
+    text = text.lower()    
     
     from bs4 import BeautifulSoup
     text = BeautifulSoup(text,"lxml").get_text()   
@@ -58,16 +57,6 @@ def cleanText(text):
 
     return clean
 
-#def to_json(df,filename):
-#    d = [ 
-#        dict([
-#            (colname, row[i]) 
-#            for i,colname in enumerate(df.columns)
-#        ])
-#        for row in df.values
-#    ]
-#    return json.dump(d, open(filename + '.json', 'w'),default=json_serial)
-
 def to_json(df,filename):
     d = [ 
         dict([
@@ -78,7 +67,6 @@ def to_json(df,filename):
     ]
     return json.dump(d, open(filename + '.json', 'w'),default=json_serial)
 
-from datetime import datetime
 
 def json_serial(obj):
     """JSON serializer for objects not serializable by default json code"""
