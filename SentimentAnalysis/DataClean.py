@@ -16,7 +16,8 @@ def readJson(filename):
     """
 
     import pandas as pd
-    df = pd.read_json(filename)     
+    df = pd.read_json(filename)  
+       
     
     #allows us join all the subarrays in keywords
     def unlist(element):
