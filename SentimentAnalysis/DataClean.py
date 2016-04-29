@@ -67,7 +67,7 @@ def to_json(df,filename):
         ])
         for row in df.values
     ]
-    return json.dump(d, open(filename + '.json', 'w'),default=json_serial)
+    return json.dump(d, open(filename + '.json', 'w'),indent = 1,default=json_serial)
 
 
 def json_serial(obj):
@@ -95,8 +95,8 @@ def giveKeyword(text):
     output = keywords[0][0] + "," + keywords[1][0]
 
     return output  #the highest ranked one...
-currentDf = readJson('NonKeywordExample.json')
-to_json(currentDf, 'testexample')
+currentDf = readJson('result.json')
+to_json(currentDf, 'CleanedData')
 
 #now we need to find a way to format and save as json or csv......
 nargb = 1
