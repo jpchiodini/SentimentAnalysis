@@ -31,7 +31,8 @@ def readJson(filename):
     
     for index, row in df.iterrows():
         if row['keywords'] == "":
-            df.set_value(index,'keywords', giveKeyword(row['body']))                       
+            df.set_value(index,'keywords', giveKeyword(row['body']))
+            print "new keyword on date " + str(row['date'])                       
 
     #sort the columns by date
     df = df.sort(columns = 'date')
@@ -89,10 +90,15 @@ def giveKeyword(text):
 
     cleanText = "".join([" " + i if not i.startswith("'") and i not in string.punctuation else i for i in text]).strip()    
 
-    rakeobj = Rake("SmartStoplist.txt")        
-    keywords = rakeobj.run(cleanText)
+    rakeobj = Rake("SmartStoplist.txt")    
+        
+    keywords = rakeobj.run(cleanText)  
+
+    output = ""
     
-    output = keywords[0][0] + "," + keywords[1][0]
+    #take top two highest ranked (if there even are two)
+    for keyword in keywords[0:2]:
+        output = output + keyword[0] + ",";
 
     return output  #the highest ranked one...
 currentDf = readJson('result.json')
