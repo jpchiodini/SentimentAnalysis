@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>55a5b319-a4ab-4cd0-b866-730abe7ffce0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>StreamTwitterData.py</StartupFile>
+    <StartupFile>ReadTrainingData.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -35,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DmozSpider.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ReadTrainingData.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SentimentAnalysis.py" />
