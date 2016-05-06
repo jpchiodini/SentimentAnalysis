@@ -4,8 +4,9 @@ from pymongo import MongoClient
 import csv
 import fileinput
 import sys
+from pymongo import MongoClient
 
-def processTweets(filename):
+def processTweets(filename,c):
     counter = 0
     itemsProcessed = 0
 
@@ -33,10 +34,22 @@ def processTweets(filename):
                 if any(x in values[2] for x in Indices):                
                     print values                    
                     print itemsProcessed
+                    c.insert_one(
+                        { 
+                            "date" : datetime.strptime(values[0], "%Y-%m-%d %H:%M:%S"),
+                            "username": values[1],
+                            "text": values[2]                                        
+                         }
+                        )
                     sys.stdout.write('\n')
                 itemsProcessed+=1
                 values = []
-                   
+
+def convert_datetime(string_date):
+    newtime = datetime.strptime(string_date, "%Y-%m-%d %H:%M:%S")
+    return newtime
+    
+         
 def json_serial(obj):
     """JSON serializer for objects not serializable by default json code"""
 
@@ -45,4 +58,7 @@ def json_serial(obj):
         return serial
     raise TypeError("Type not serializable")
 
-processTweets("tweets11")
+client = MongoClient()
+db = client['TrainingData']
+collection = db['TweetsNov2009']
+processTweets("tweets11",collection)
